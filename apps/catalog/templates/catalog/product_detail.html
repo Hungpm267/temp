@@ -1,0 +1,24 @@
+<h1>{{ product.name }}</h1>
+<a href="{% url 'product-list' %}">Back to list</a> |
+<a href="{% url 'product-edit' pk=product.pk %}">Edit</a> |
+<a href="{% url 'product-delete' pk=product.pk %}">Delete</a>
+
+<p><strong>Description:</strong> {{ product.description|linebreaks }}</p>
+<p><strong>Price:</strong> {{ product.price }}</p>
+<p><strong>Categories:</strong>
+    {% for category in product.categories.all %}
+        {{ category.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+
+<h3>Thumbnail</h3>
+{% if product.thumbnail %}
+    <img src="{{ product.thumbnail.url }}" alt="{{ product.name }}" width="300">
+{% endif %}
+
+<h3>More Images</h3>
+<div style="display: flex; gap: 10px;">
+    {% for image in product.images.all %}
+        <img src="{{ image.image.url }}" alt="Product image" width="150">
+    {% endfor %}
+</div>

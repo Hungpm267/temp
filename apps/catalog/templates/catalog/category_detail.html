@@ -1,0 +1,7 @@
+<h1>{{ category.name }}</h1>
+<p>Parent: {{ category.parent.name|default:"None" }}</p>
+{% if category.image %}
+    <img src="{{ category.image.url }}" alt="{{ category.name }}" width="200">
+{% endif %}
+<br>
+<a href="{% url 'category-list' %}">Back to list</a>

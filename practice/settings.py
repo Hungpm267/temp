@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     
     'apps.api',
     'apps.catalog',
-    'apps.user'
+    'apps.user',
+    
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +151,9 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+
+# practice/settings.py
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

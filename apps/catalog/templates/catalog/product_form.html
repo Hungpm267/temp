@@ -1,0 +1,16 @@
+
+
+
+<h1>{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <p>
+        <label for="id_more_images">More images:</label>
+        <input type="file" name="more_images" id="id_more_images" multiple>
+    </p>
+    <button type="submit">Save Product</button>
+</form>
+<a href="{% url 'product-list' %}">Cancel</a>
