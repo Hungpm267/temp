@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'practice.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pmh_django',       # tên database bạn đã tạo
+        'NAME': 'django_pmh',       # tên database bạn đã tạo
         'USER': 'pmh',           # user bạn tạo ở bước trên
         'PASSWORD': '123',  # mật khẩu user
         'HOST': 'localhost',             # hoặc IP của server PostgreSQL
-        'PORT': '5432',                  # port mặc định của PostgreSQL
+        'PORT': '5555',                  # port mặc định của PostgreSQL
     }
 }
 

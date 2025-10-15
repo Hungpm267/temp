@@ -52,7 +52,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
     context_object_name = 'products'
-    paginate_by = 8 # Phân trang, mỗi trang 8 sản phẩm
+    paginate_by = 2 # Phân trang, mỗi trang 8 sản phẩm
 
 # Hiển thị chi tiết Product (Read)
 class ProductDetailView(DetailView):
@@ -68,13 +68,18 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('product-list')
 
     def form_valid(self, form):
-        # Lấy danh sách các file ảnh phụ từ request
+    # Dòng 1: Lấy danh sách các file ảnh phụ
         images = self.request.FILES.getlist('more_images')
-        # Lưu form chính để tạo ra đối tượng product
+
+    # Dòng 2: Chạy bước lưu tự động đầu tiên
         self.object = form.save()
-        # Lặp qua từng file ảnh và tạo đối tượng ProductImage
+
+    # Dòng 3: Lặp qua từng file ảnh phụ
         for image in images:
+        # Dòng 4: Tạo và lưu từng ảnh vào model ProductImage
             ProductImage.objects.create(product=self.object, image=image)
+        
+    # Dòng 5: Quay lại quy trình tự động để nó làm nốt việc cuối
         return super().form_valid(form)
 
 # Cập nhật Product (Update)
