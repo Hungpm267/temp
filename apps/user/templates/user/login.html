@@ -1,0 +1,7 @@
+<h2>Đăng Nhập</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Đăng Nhập</button>
+</form>
+<p>Chưa có tài khoản? <a href="{% url 'signup' %}">Đăng ký ngay</a></p>

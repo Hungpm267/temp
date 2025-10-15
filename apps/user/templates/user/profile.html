@@ -1,0 +1,8 @@
+<h1>Chào mừng, {{ user.username }}!</h1>
+<p>Đây là trang hồ sơ của bạn.</p>
+<p>Email: {{ user.email }}</p>
+
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Đăng Xuất</button>
+</form>
