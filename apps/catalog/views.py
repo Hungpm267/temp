@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Category
-from .forms import CategoryForm
+from .models import Category, Product, ProductImage
+from .forms import CategoryForm, ProductForm
 
 # Hiển thị danh sách Category (Read)
 class CategoryListView(ListView):
@@ -44,8 +44,7 @@ class CategoryDeleteView(DeleteView):
     
     # =======================================================================
     
-from .models import Category, Product, ProductImage
-from .forms import CategoryForm, ProductForm
+
 # ======== THÊM CÁC PRODUCT VIEWS DƯỚI ĐÂY ========
 
 # Hiển thị danh sách Product (Read)
