@@ -108,18 +108,54 @@
 from .models import Product, ProductImage, Category, Comment
 from .serializer import CategorySerializer, ProductSerializer, ProductImageSerializer, CommentSerializer
 from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied # <-- Thêm
+from django.db.models import Count
+from rest_framework.decorators import action
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.AllowAny]
+
+    @action(detail=False, methods=['get'], url_path='stats')
+    def category_stats(self, request):
+        """
+        Thống kê số lượng sản phẩm trong mỗi danh mục.
+        URL: /api/catalog/categories/stats/
+        """
+        # Annotate mỗi category với số lượng product liên quan
+        stats = Category.objects.annotate(product_count=Count('products')).values('name', 'product_count')
+        return Response(stats)
     
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object() # lay instance tu id tu kwargs
+        instance.view_count = F('view_count') + 1  # tang view count len 1
+        instance.save(update_fields = ['view_count']) # luu thay doi vao database, chi thuc hien view_count
+        instance.refresh_from_db() # tai du lieu moi nhaat cua doi tuong tu database
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=['get'], url_path='stats')
+    def product_stats(self, request, pk=None):
+        """
+        Lấy thống kê (lượt xem, bình luận) cho một sản phẩm.
+        URL: /api/catalog/products/{id}/stats/
+        """
+        product = self.get_object()
+        comment_count = product.comments.count()
+        return Response({
+            'product_id': product.id,
+            'product_name': product.name,
+            'view_count': product.view_count,
+            'comment_count': comment_count
+        })
     
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()

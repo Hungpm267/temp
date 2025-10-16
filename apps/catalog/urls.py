@@ -48,3 +48,12 @@ urlpatterns = [
     path('', include(products_router.urls)),
 
 ]
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet)
+products_router = routers.NestedDefaultRouter(router, r'products', lookup='product')
+products_router.register(r'comments', CommentViewSet, basename='product-comments')
+urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(products_router.urls)),
+]

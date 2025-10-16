@@ -18,10 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+# THÊM CÁC DÒNG IMPORT NÀY
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('apps/', include('apps.api.urls'))
+    path('apps/', include('apps.api.urls')),
+    # THÊM CÁC ĐƯỜNG DẪN CỦA SWAGGER VÀO ĐÂY
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Giao diện Swagger UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # Giao diện ReDoc:
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if settings.DEBUG:

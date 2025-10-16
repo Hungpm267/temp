@@ -22,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'description', 'price', 'thumbnail',
-                  'categories', 'image', 'created_at', 'updated_at']
+                  'categories', 'image', 'created_at', 'view_count']
         
 class CommentSerializer(serializers.ModelSerializer):
     # Hiển thị username thay vì user ID, và chỉ cho phép đọc

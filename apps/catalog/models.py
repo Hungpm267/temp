@@ -23,6 +23,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     thumbnail = models.ImageField(upload_to='products/thumbnails/', help_text="Ảnh đại diện cho sản phẩm", null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='products')
+    view_count = models.PositiveIntegerField(help_text="đếm số lần xem sản phẩm", default = 0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
