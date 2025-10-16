@@ -2,11 +2,11 @@
 
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
-from .models import Category, Product, ProductImage
+from .models import Category, Product, ProductImage, Comment
 
 # Đăng ký Category 
 admin.site.register(Category, MPTTModelAdmin)
-
+admin.site.register(Comment)
 # Dùng TabularInline để thêm nhiều ảnh ngay trên trang Product
 class ProductImageInline(admin.TabularInline):
     model = ProductImage

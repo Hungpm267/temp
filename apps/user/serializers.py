@@ -35,17 +35,17 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 # Serializer để đăng ký user mới (giữ nguyên)
+    
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
+    password = serializers.CharField(write_only = True)
     class Meta:
-        model = User
+        model = User 
         fields = ['username', 'password', 'email']
-
+    
     def create(self, validated_data):
         user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data.get('email', ''), # Thêm giá trị mặc định
-            password=validated_data['password']
+            username= validated_data['username'],
+            email=validated_data.get('email', ''),
+             password= validated_data['password']
         )
         return user

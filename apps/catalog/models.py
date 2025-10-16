@@ -2,7 +2,7 @@
 
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
-
+from django.contrib.auth.models import User
 # (Class Category của bạn giữ nguyên ở đây)
 class Category(MPTTModel):
     name = models.CharField(max_length=200, unique=True)
@@ -21,7 +21,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    thumbnail = models.ImageField(upload_to='products/thumbnails/', help_text="Ảnh đại diện cho sản phẩm")
+    thumbnail = models.ImageField(upload_to='products/thumbnails/', help_text="Ảnh đại diện cho sản phẩm", null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -35,3 +35,16 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.name}"
+    
+class Comment(models.Model):
+    product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.product.name}'

@@ -1,0 +1,25 @@
+1. Lấy danh sách & Tạo mới bình luận
+URL này được dùng để xem tất cả bình luận của một sản phẩm hoặc đăng một bình luận mới cho sản phẩm đó.
+
+URL: /apps/catalog/products/{product_pk}/comments/
+
+Các thao tác:
+
+GET: Lấy về danh sách tất cả bình luận của sản phẩm có ID là {product_pk}.
+
+POST: Tạo một bình luận mới cho sản phẩm có ID là {product_pk} (yêu cầu đăng nhập).
+
+2. Xem chi tiết, Cập nhật & Xóa một bình luận
+URL này được dùng để thao tác với một bình luận cụ thể đã tồn tại.
+
+URL: /apps/catalog/products/{product_pk}/comments/{comment_pk}/
+
+Các thao tác:
+
+GET: Lấy thông tin chi tiết của bình luận có ID là {comment_pk}.
+
+PUT: Cập nhật toàn bộ thông tin của bình luận (yêu cầu đăng nhập và là chủ sở hữu).
+
+PATCH: Cập nhật một phần thông tin của bình luận (yêu cầu đăng nhập và là chủ sở hữu).
+
+DELETE: Xóa bình luận (yêu cầu đăng nhập và là chủ sở hữu).

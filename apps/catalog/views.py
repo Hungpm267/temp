@@ -105,9 +105,10 @@
 # =============================================================================================================================
 
 
-from .models import Product, ProductImage, Category
-from .serializer import CategorySerializer, ProductSerializer, ProductImageSerializer
+from .models import Product, ProductImage, Category, Comment
+from .serializer import CategorySerializer, ProductSerializer, ProductImageSerializer, CommentSerializer
 from rest_framework import viewsets, permissions
+from rest_framework.exceptions import PermissionDenied # <-- Thêm
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -119,7 +120,27 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]
+    
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly] # Ai cũng có thể xem, nhưng phải đăng nhập để đăng
 
+    def perform_create(self, serializer):
+        # Tự động gán user hiện tại là tác giả của bình luận
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        # Chỉ chủ sở hữu của bình luận mới có quyền chỉnh sửa
+        if serializer.instance.user != self.request.user:
+            raise PermissionDenied("You do not have permission to edit this comment.")
+        serializer.save()
+
+    def perform_destroy(self, serializer):
+        # Chỉ chủ sở hữu của bình luận mới có quyền xóa
+        if serializer.instance.user != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this comment.")
+        serializer.instance.delete()
 
 
 

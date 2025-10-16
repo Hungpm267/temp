@@ -12,9 +12,7 @@ router.register(r'', views.UserViewSet) # Đăng ký với tiền tố rỗng
 
 urlpatterns = [
     # Các URL cho ViewSet (sẽ tự động tạo /signup/ và /me/)
-    path('', include(router.urls)),
-
- 
+    path('', include(router.urls)), 
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

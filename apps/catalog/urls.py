@@ -1,6 +1,6 @@
 # apps/catalog/urls.py
 
-from django.urls import path,include
+
 # from .views import (
 #     CategoryListView,
 #     CategoryDetailView,
@@ -18,11 +18,17 @@ from django.urls import path,include
 # )
 
 from rest_framework.routers import DefaultRouter
-from .views import CategoryViewSet, ProductViewSet
+from .views import CategoryViewSet, ProductViewSet, CommentViewSet
+from rest_framework_nested import routers 
+from django.urls import path, include
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
-router.register(r'Products', ProductViewSet)
+router.register(r'products', ProductViewSet)
+
+# Router lồng nhau cho comments
+products_router = routers.NestedDefaultRouter(router, r'products', lookup='product')
+products_router.register(r'comments', CommentViewSet, basename='product-comments')
 
 urlpatterns = [
     # path('categories/', CategoryListView.as_view(), name='category-list'),
@@ -38,6 +44,7 @@ urlpatterns = [
     # path('product/add/', ProductCreateView.as_view(), name='product-add'),
     # path('product/<int:pk>/edit/', ProductUpdateView.as_view(), name='product-edit'),
     # path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product-delete'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('', include(products_router.urls)),
 
 ]
