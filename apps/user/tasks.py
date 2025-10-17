@@ -5,6 +5,7 @@ from celery import shared_task
 
 @shared_task
 def gui_thong_bao_co_user_moi(username, user_email):
+    print("=====================================", username, user_email)
     subject = f"Cảm ơn bạn đã tạo tài khoản tên là {username}"
     message = f"Chúc bạn vạn sự như ý"
     from_email = settings.EMAIL_HOST_USER
