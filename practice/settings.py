@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'practice.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_pmh',       # tên database bạn đã tạo
+        'NAME': 'pmh_django',       # tên database bạn đã tạo
         'USER': 'pmh',           # user bạn tạo ở bước trên
         'PASSWORD': '123',  # mật khẩu user
         'HOST': 'localhost',             # hoặc IP của server PostgreSQL
-        'PORT': '5555',                  # port mặc định của PostgreSQL
+        'PORT': '5432',                  # port mặc định của PostgreSQL
     }
 }
 
@@ -159,3 +159,14 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0' # Mặc định của Redis
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
+EMAIL_HOST_USER = '21520901@gm.uit.edu.vn'  # Email của bạn
+EMAIL_HOST_PASSWORD = 'vfns bnwc cpfk lbyl' # Mật khẩu ứng dụng

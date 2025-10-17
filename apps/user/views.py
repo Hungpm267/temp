@@ -58,7 +58,9 @@ class UserViewSet(mixins.CreateModelMixin, # Chỉ cho phép hành động 'crea
 
     def get_serializer_class(self):
         if self.action == 'create':
+            print("tạo user mới và chạy vào register serializer ")
             return RegisterSerializer
+        print("chạy vào user serializer ")
         return UserSerializer
 
     def get_permissions(self):

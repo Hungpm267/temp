@@ -120,7 +120,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     @action(detail=False, methods=['get'], url_path='stats')
-    def category_stats(self, request):
+    def category_stats_selfnamed(self, request):
         """
         Thống kê số lượng sản phẩm trong mỗi danh mục.
         URL: /api/catalog/categories/stats/
@@ -143,7 +143,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     @action(detail=True, methods=['get'], url_path='stats')
-    def product_stats(self, request, pk=None):
+    def product_stats_selfnamed(self, request, pk=None):
         """
         Lấy thống kê (lượt xem, bình luận) cho một sản phẩm.
         URL: /api/catalog/products/{id}/stats/
