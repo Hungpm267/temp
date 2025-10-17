@@ -167,6 +167,9 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '21520901@gm.uit.edu.vn'  # Email của bạn
 EMAIL_HOST_PASSWORD = 'vfns bnwc cpfk lbyl' # Mật khẩu ứng dụng

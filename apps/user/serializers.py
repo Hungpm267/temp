@@ -27,7 +27,7 @@
     # ==================================
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .task import gui_thong_bao_co_user_moi
+from .tasks import gui_thong_bao_co_user_moi
 
 # Serializer để hiển thị thông tin user (an toàn)
 class UserSerializer(serializers.ModelSerializer):
@@ -39,7 +39,6 @@ class UserSerializer(serializers.ModelSerializer):
     
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only = True)
-    print("chạy trạm")
     class Meta:
         model = User 
         fields = ['username', 'password', 'email']
@@ -50,7 +49,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data.get('email', ''),
             password= validated_data['password']
         )
-        print("sau khi chạy vào gửi thong báo")
         gui_thong_bao_co_user_moi.delay(user.username, user.email)
         
         return user
